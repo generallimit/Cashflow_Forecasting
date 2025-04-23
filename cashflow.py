@@ -1,27 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# ### Step 1: Install Required Libraries ###
-
-# In[1]:
-
-
-get_ipython().system('python3 -m pip install --upgrade pip')
-get_ipython().system('source .venv/bin/activate')
-get_ipython().system('pip install numpy pandas matplotlib seaborn tensorflow keras xgboost scikit-learn fastapi')
-
-
-# ### Step 2: Load and Prepare Data ###
-# 
-# Let's assume we have a dataset (cash_flow_data.csv) with the following columns:
-# 
-#  - date: Daily timestamps
-#  - sales: Revenue from sales
-#  - expenses: Daily expenses
-#  - cash_inflow: Cash received
-#  - cash_outflow: Cash spent
-#  - net_cash_flow: cash_inflow - cash_outflow (target variable)
-
 # In[2]:
 
 
@@ -31,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load dataset
-df = pd.read_csv("/home/jefferyp/Documents/projects/Cashflow_Forecasting/cashflow_2024.csv", parse_dates=["Date"])
+df = pd.read_csv("../cashflow_2024.csv", parse_dates=["Date"])
 df.set_index("Date", inplace=True)
 
 # Fill missing values
@@ -166,8 +142,6 @@ plt.show()
 
 
 # ### Step 6: Deploy the Model ###
-# 
-# Use Flask or FastAPI to expose the model as an API for integration into POS systems.
 
 # In[12]:
 
@@ -183,18 +157,3 @@ def predict_cash_flow(features: str):
     prediction = model_xgb.predict(features_array)[0]
     return {"predicted_cash_flow": float(prediction)}
 
-
-# ### Final Thoughts ###
-# 
-# 1. Which model to use?
-#     - XGBoost: Faster, interpretable, suitable for structured financial data.
-#     - LSTM: Better for sequential dependencies but requires more data.
-# 
-# 2. Next Steps
-#     - Integrate real-time data (API from POS/ERP).
-#     - Automate model retraining using cloud platforms (AWS Lambda, Google Cloud Functions).
-#     - Implement anomaly detection for unusual cash flow patterns.
-# 
-# Would you like help with deployment on AWS or GCP? 🚀
-
-# 
