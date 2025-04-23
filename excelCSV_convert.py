@@ -1,7 +1,7 @@
 import pandas as pd
 read_file = pd.read_excel('cashflows_2024.xlsx')
 
-read_file.to_csv ('selectionscashflows_2024.csv',  
+read_file.to_csv ('cashflows_2024.csv',  
                   index = None, 
                   header=True) 
     
