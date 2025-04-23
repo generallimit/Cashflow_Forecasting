@@ -7,7 +7,7 @@ read_file.to_csv ('selectionscashflows_2024.csv',
     
 # read csv file and convert  
 # into a dataframe object 
-df = pd.DataFrame(pd.read_csv('flows_2024.csv')) 
+df = pd.DataFrame(pd.read_csv('cashflows_2024.csv')) 
   
 # show the dataframe 
 df
