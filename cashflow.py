@@ -38,20 +38,31 @@ from sklearn.preprocessing import StandardScaler
 df["day_of_week"] = df.index.dayofweek
 df["month"] = df.index.month
 
-# Scale numeric features
+# Explicitly specify the feature columns
+feature_columns = [
+    "net_cash_flow_lag_1",
+    "net_cash_flow_lag_2",
+    "net_cash_flow_lag_3",
+    "net_cash_flow_lag_4",
+    "net_cash_flow_lag_5",
+    "net_cash_flow_lag_6",
+    "net_cash_flow_lag_7",
+    "day_of_week",
+    "month"
+]
 scaler = StandardScaler()
-scaled_features = scaler.fit_transform(df)
+scaled_features = scaler.fit_transform(df[feature_columns])
 
 # Convert back to DataFrame
-df_scaled = pd.DataFrame(scaled_features, index=df.index, columns=df.columns)
+df_scaled = pd.DataFrame(scaled_features, index=df.index, columns=feature_columns)
+df_scaled["net_cash_flow"] = df["net_cash_flow"]  # Add target back for splitting
 
 # Split into training and testing
 train_size = int(len(df) * 0.8)
 train, test = df_scaled.iloc[:train_size], df_scaled.iloc[train_size:]
 
-# Define target variable
-X_train, y_train = train.drop(columns=["net_cash_flow"]), train["net_cash_flow"]
-X_test, y_test = test.drop(columns=["net_cash_flow"]), test["net_cash_flow"]
+X_train, y_train = train[feature_columns], train["net_cash_flow"]
+X_test, y_test = test[feature_columns], test["net_cash_flow"]
 
 
 # ### Step 4: Train an XGBoost Model ###
